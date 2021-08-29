@@ -1,10 +1,10 @@
 <script>
 	import { goto } from '$app/navigation';
 	import { insternNameList, registerPlaceholderAskPrefix } from '$lib/const';
+	import { randomElementFromArray } from '$lib/utils';
 	import Query16 from 'carbon-icons-svelte/lib/Query16';
 	import Rocket16 from 'carbon-icons-svelte/lib/Rocket16';
 	import { writable } from 'svelte/store';
-	import { randomElementFromArray } from './utils';
 
 	let name = '';
 	let selectedDynamicPlaceholder = writable(randomElementFromArray(insternNameList));
