@@ -32,7 +32,7 @@
 		);
 	});
 
-	const onGoCorious = () => {
+	const onGoCurious = () => {
 		if (name.length === 0) {
 			alert('Introduce your name first pls.');
 			return;
@@ -64,7 +64,7 @@
           font-friendlyWelcome text-lg
           hover:bg-freshPink hover:text-white
           transition-all duration-100 ease-in"
-				on:click={onGoCorious}
+				on:click={onGoCurious}
 			>
 				Go curious
 				<Query16 class="inline group-hover:hidden" />
