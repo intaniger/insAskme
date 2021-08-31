@@ -1,4 +1,6 @@
 <script>
+	import Button from '$lib/components/Button.svelte';
+
 	import { goto } from '$app/navigation';
 	import { insternNameList, registerPlaceholderAskPrefix } from '$lib/const';
 	import { randomElementFromArray } from '$lib/utils';
@@ -59,18 +61,11 @@
 			on:keypress={(e) => (e.key === 'Enter' ? onGoCurious() : console.log(e))}
 		/>
 		<div class="flex justify-self-end">
-			<button
-				class="group w-40 p-2 
-          bg-white bg-opacity-10 border-pinkSecondary border-2 text-freshPink rounded-sm
-          font-friendlyWelcome text-lg
-          hover:bg-freshPink hover:text-white
-          transition-all duration-100 ease-in"
-				on:click={onGoCurious}
-			>
+			<Button on:click={onGoCurious} additionalClass="w-40">
 				Go curious
 				<Query16 class="inline group-hover:hidden" />
-				<Rocket16 class="hidden group-hover:inline animate-diagonal" />
-			</button>
+				<Rocket16 class="hidden group-hover:inline animate-diagonal" /></Button
+			>
 		</div>
 	</div>
 </div>
