@@ -1,3 +1,3 @@
-export interface IQuestion {
+export interface IQuestionBody {
 	name: string;
 }
