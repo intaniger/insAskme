@@ -34,8 +34,8 @@ const db = getRealtimeDB();
 const questionsRef = ref(db, 'Qs');
 export type Question = WithId<IQuestionBody>;
 
-const withIdMapper = (raw: Record<string, IQuestionBody>): Question[] =>
-	Object.entries(raw).map(([id, value]) => ({ id, ...value }));
+const withIdMapper = (raw?: Record<string, IQuestionBody>): Question[] =>
+	Object.entries(raw || {}).map(([id, value]) => ({ id, ...value }));
 
 export const ReadonlyFirebaseRTDBStore = readable<Promise<Question[]> | Question[]>(
 	new Promise((resolve, reject) => {
@@ -55,3 +55,5 @@ export const ReadonlyFirebaseRTDBStore = readable<Promise<Question[]> | Question
 
 export const createNewQuestion = (question: IQuestionBody): Promise<void> =>
 	set(push(questionsRef), question);
+
+export const _removeAllQuestions = () => set(questionsRef, null);

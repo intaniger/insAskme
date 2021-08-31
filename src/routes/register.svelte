@@ -58,7 +58,7 @@
          font-userInput text-xl"
 			placeholder={toDisplayPlaceholder}
 			bind:value={name}
-			on:keypress={(e) => (e.key === 'Enter' ? onGoCurious() : console.log(e))}
+			on:keypress={(e) => (e.key === 'Enter' ? onGoCurious() : null)}
 		/>
 		<div class="flex justify-self-end">
 			<Button on:click={onGoCurious} additionalClass="w-40">
