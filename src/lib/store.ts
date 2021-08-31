@@ -1,7 +1,18 @@
 import { initializeApp } from 'firebase/app';
-import { Database, get, getDatabase, onValue, orderByKey, query, ref } from 'firebase/database';
+import {
+	Database,
+	get,
+	getDatabase,
+	onValue,
+	orderByKey,
+	push,
+	query,
+	ref,
+	set
+} from 'firebase/database';
 import { readable } from 'svelte/store';
-import type { IQuestion } from './types/question';
+import type { IQuestionBody } from './types/question';
+import type { WithId } from './types/withId';
 
 const firebaseConfig = {
 	apiKey: 'AIzaSyDihuJrjMTTKLXXhOEYtpA1_rS3h6xmJKs',
@@ -41,3 +52,6 @@ export const ReadonlyFirebaseRTDBStore = readable<Promise<Question[]> | Question
 		});
 	}
 );
+
+export const createNewQuestion = (question: IQuestionBody): Promise<void> =>
+	set(push(questionsRef), question);
