@@ -56,4 +56,4 @@ export const ReadonlyFirebaseRTDBStore = readable<Promise<Question[]> | Question
 export const createNewQuestion = (question: IQuestionBody): Promise<void> =>
 	set(push(questionsRef), question);
 
-export const _removeAllQuestions = () => set(questionsRef, null);
+export const _removeAllQuestions = (): Promise<void> => set(questionsRef, null);
