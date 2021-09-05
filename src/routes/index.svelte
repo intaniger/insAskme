@@ -6,7 +6,6 @@
 	import { QuestionType } from '$lib/types/questionType';
 
 	const onClickAdd = () => {
-		console.log('Dev mocked new data');
 		createNewQuestion({
 			questioner: 'Tiger',
 			question: 'Hi',
