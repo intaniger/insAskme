@@ -14,11 +14,15 @@ module.exports = {
 				freshPink: '#FF427F',
 				textTitle: '#36383c',
 				bgSky: '#3494e6',
-				bgPink: '#ec6ead'
+				bgPink: '#ec6ead',
+				cardColor1: '#ba53de',
+				cardColor2: '#88bef5',
+				cardColor3: '#f4fa9c'
 			},
 			fontFamily: {
 				friendlyWelcome: ['Josefin Sans', 'san-serif'],
-				userInput: ['Mitr', 'san-serif']
+				userInput: ['Mitr', 'san-serif'],
+				readingFont: ['Kodchasan', 'sans-serif']
 			},
 			keyframes: {
 				diagonal: {
@@ -28,6 +32,12 @@ module.exports = {
 			},
 			animation: {
 				diagonal: 'diagonal 1s ease-in-out infinite'
+			},
+			fill: (theme) => ({
+				white: theme('colors.white')
+			}),
+			fontSize: {
+				cramped: ['1rem', '1rem']
 			}
 		}
 	},
