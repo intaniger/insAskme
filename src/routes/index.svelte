@@ -3,6 +3,7 @@
 	import { dev } from '$app/env';
 	import Button from '$lib/components/Button.svelte';
 	import QuestionCard from '$lib/components/QuestionCard.svelte';
+	import { QuestionType } from '$lib/types/questionType';
 
 	const onClickAdd = () => {
 		console.log('Dev mocked new data');
@@ -24,14 +25,26 @@
 		{#await $ReadonlyFirebaseRTDBStore}
 			<p>loading all questions...</p>
 		{:then questions}
-			<div class="w-full h-full grid grid-cols-3 divide-x-2 divide-dotted divide-pastelOrange">
+			<div
+				class="w-full h-full grid grid-cols-3 divide-x-2 divide-dotted divide-pastelOrange overflow-y-hidden"
+			>
 				{#each [0, 1, 2] as status}
-					<div class="appearance-none grid grid-cols-2 h-full overflow-y-auto">
-						{#each questions as question}
-							<div class="flex justify-center">
-								<QuestionCard {...question} {status} />
+					<div class="group grid content-start h-full overflow-y-hidden">
+						<div
+							class="row-auto flex justify-center 
+                    {questions.length > 6 ? 'group-hover:shadow-md transition duration-200' : ''}"
+						>
+							<p class="font-friendlyWelcome text-2xl">{QuestionType[status]}</p>
+						</div>
+						<div class="row-auto max-h-full overflow-y-auto">
+							<div class="appearance-none grid grid-cols-2 ">
+								{#each questions as question}
+									<div class="flex justify-center">
+										<QuestionCard {...question} {status} />
+									</div>
+								{/each}
 							</div>
-						{/each}
+						</div>
 					</div>
 				{/each}
 			</div>
