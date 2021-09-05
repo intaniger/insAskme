@@ -2,13 +2,17 @@
 	import type { QuestionType } from '$lib/types/questionType';
 	import ThumbsUp16 from 'carbon-icons-svelte/lib/ThumbsUp16';
 
+	const duskedColorPredicate = /(1)$/;
+
 	export let questioner: string;
 	export let question: string;
 	export let upvote: number;
 	export let status: QuestionType;
 	export let attachments: string[] = [];
 
-	let color = ['bg-cardColor1', 'bg-cardColor2', 'bg-cardColor3', 'bg-cardColor4'][status];
+	let color = ['bg-cardColor1', 'bg-cardColor2', 'bg-cardColor3'][status];
+	let textColor = duskedColorPredicate.test(color) ? 'text-white' : 'text-textTitle';
+	let fillColor = duskedColorPredicate.test(color) ? 'fill-white' : 'fill-textTitle';
 </script>
 
 <div
@@ -16,10 +20,15 @@
   flex flex-col place-content-between font-readingFont shadow-lg"
 >
 	<div class="overflow-y-auto h-full">
-		<p class="break-words text-sm max-h-2.5">{question}</p>
+		<p class="break-words text-sm max-h-2.5 {textColor}">{question}</p>
 	</div>
-	<div class="flex flex-row justify-between">
-		<p class="text-base inline-flex gap-x-1.5 items-center"><ThumbsUp16 />{upvote}</p>
-		<p class="text-base">{questioner.toUpperCase()}</p>
+	<div class="flex flex-row justify-between items-end">
+		<p class="text-cramped inline-flex gap-x-1.5 items-end {textColor}">
+			<ThumbsUp16 class={fillColor} />{upvote}
+		</p>
+		<div class="inline-flex items-end">
+			<p class="text-xs {textColor}">asked by</p>
+			<p class="text-sm {textColor} ml-1">{questioner.toUpperCase()}</p>
+		</div>
 	</div>
 </div>

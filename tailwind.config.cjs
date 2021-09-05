@@ -32,6 +32,12 @@ module.exports = {
 			},
 			animation: {
 				diagonal: 'diagonal 1s ease-in-out infinite'
+			},
+			fill: (theme) => ({
+				white: theme('colors.white')
+			}),
+			fontSize: {
+				cramped: ['1rem', '1rem']
 			}
 		}
 	},
