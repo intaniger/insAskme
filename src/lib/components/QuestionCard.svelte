@@ -4,6 +4,7 @@
 
 	const duskedColorPredicate = /(1)$/;
 
+	export let id: string;
 	export let questioner: string;
 	export let question: string;
 	export let upvote: number;
