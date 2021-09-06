@@ -28,7 +28,7 @@
 		</p>
 		<div class="inline-flex items-end">
 			<p class="text-xs {textColor}">asked by</p>
-			<p class="text-sm {textColor} ml-1">{questioner.toUpperCase()}</p>
+			<p class="text-sm {textColor} ml-1 font-bold">{questioner.toUpperCase()}</p>
 		</div>
 	</div>
 </div>
