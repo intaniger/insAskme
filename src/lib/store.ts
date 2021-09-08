@@ -11,8 +11,8 @@ import {
 	set
 } from 'firebase/database';
 import { readable } from 'svelte/store';
-import type { IQuestionBody } from './types/question';
-import type { WithId } from './types/withId';
+import type { IQuestionBody, Question } from './types/question';
+import { QuestionType } from './types/questionType';
 
 const firebaseConfig = {
 	apiKey: 'AIzaSyDihuJrjMTTKLXXhOEYtpA1_rS3h6xmJKs',
@@ -32,23 +32,38 @@ const getRealtimeDB = (): Database => {
 
 const db = getRealtimeDB();
 const questionsRef = ref(db, 'Qs');
-export type Question = WithId<IQuestionBody>;
+type QuestionTypeKey = keyof typeof QuestionType;
+export type TypedQuestion = { [k in QuestionTypeKey]?: Question[] };
 
 const withIdMapper = (raw?: Record<string, IQuestionBody>): Question[] =>
 	Object.entries(raw || {}).map(([id, value]) => ({ id, ...value }));
 
-export const ReadonlyFirebaseRTDBStore = readable<Promise<Question[]> | Question[]>(
+const typedSeperate = (Qs: Question[]): TypedQuestion =>
+	[QuestionType.InCurious, QuestionType.Scheduled, QuestionType.Archeived]
+		.map<[QuestionType, Question[]]>((t) => [
+			t,
+			Qs.map(({ id, ...rest }) => ({ id: `${t}-${id}`, ...rest }))
+		])
+		.reduce<TypedQuestion>(
+			(acc, [type, Qs]) => ({
+				...acc,
+				[type]: Qs
+			}),
+			{}
+		);
+
+export const ReadonlyFirebaseRTDBStore = readable<Promise<TypedQuestion> | TypedQuestion>(
 	new Promise((resolve, reject) => {
 		const Q = query(questionsRef, orderByKey());
 		get(Q)
 			.then((snapshot) => {
-				resolve(withIdMapper(snapshot.val()));
+				resolve(typedSeperate(withIdMapper(snapshot.val())));
 			})
 			.catch(reject);
 	}),
 	(setter) => {
 		onValue(questionsRef, (snapshot) => {
-			setter(withIdMapper(snapshot.val()));
+			setter(typedSeperate(withIdMapper(snapshot.val())));
 		});
 	}
 );

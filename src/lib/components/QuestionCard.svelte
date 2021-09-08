@@ -4,6 +4,7 @@
 
 	const duskedColorPredicate = /(1)$/;
 
+	export let id: string;
 	export let questioner: string;
 	export let question: string;
 	export let upvote: number;
@@ -28,7 +29,7 @@
 		</p>
 		<div class="inline-flex items-end">
 			<p class="text-xs {textColor}">asked by</p>
-			<p class="text-sm {textColor} ml-1">{questioner.toUpperCase()}</p>
+			<p class="text-sm {textColor} ml-1 font-bold">{questioner.toUpperCase()}</p>
 		</div>
 	</div>
 </div>

@@ -1,8 +1,9 @@
-<script>
-	import { createNewQuestion, ReadonlyFirebaseRTDBStore, _removeAllQuestions } from '$lib/store';
+<script lang="ts">
 	import { dev } from '$app/env';
 	import Button from '$lib/components/Button.svelte';
-	import QuestionCard from '$lib/components/QuestionCard.svelte';
+	import { createNewQuestion, ReadonlyFirebaseRTDBStore, _removeAllQuestions } from '$lib/store';
+	import QuestionsBucket from '$lib/components/QuestionsBucket.svelte';
+	import type { QuestionEnteredEvent, QuestionLeftEvent } from '$lib/types/questionsBucketEvent';
 	import { QuestionType } from '$lib/types/questionType';
 
 	const onClickAdd = () => {
@@ -12,6 +13,14 @@
 			upvote: 0,
 			status: Math.floor(Math.random() * 3)
 		});
+	};
+
+	const __pocEnteredEvent = (status: string) => (e: CustomEvent<QuestionEnteredEvent>) => {
+		console.log(e.detail.question, `Inserted @${e.detail.indexInserted} to ${status}`);
+	};
+
+	const __pocLeftEvent = (status: string) => (e: CustomEvent<QuestionLeftEvent>) => {
+		console.log(e.detail.question, `Left from ${status}`);
 	};
 </script>
 
@@ -28,23 +37,11 @@
 				class="w-full h-full grid grid-cols-3 divide-x-2 divide-dotted divide-pastelOrange overflow-y-hidden"
 			>
 				{#each [0, 1, 2] as status}
-					<div class="group grid content-start h-full overflow-y-hidden">
-						<div
-							class="row-auto flex justify-center 
-                    {questions.length > 6 ? 'group-hover:shadow-md transition duration-200' : ''}"
-						>
-							<p class="font-friendlyWelcome text-2xl">{QuestionType[status]}</p>
-						</div>
-						<div class="row-auto max-h-full overflow-y-auto">
-							<div class="appearance-none grid grid-cols-2 ">
-								{#each questions as question}
-									<div class="flex justify-center">
-										<QuestionCard {...question} {status} />
-									</div>
-								{/each}
-							</div>
-						</div>
-					</div>
+					<QuestionsBucket
+						on:entered={__pocEnteredEvent(QuestionType[status])}
+						on:left={__pocLeftEvent(QuestionType[status])}
+						{...{ questions: questions[status], status }}
+					/>
 				{/each}
 			</div>
 		{:catch}
