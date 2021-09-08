@@ -11,9 +11,8 @@ import {
 	set
 } from 'firebase/database';
 import { readable } from 'svelte/store';
-import type { IQuestionBody } from './types/question';
+import type { IQuestionBody, Question } from './types/question';
 import { QuestionType } from './types/questionType';
-import type { WithId } from './types/withId';
 
 const firebaseConfig = {
 	apiKey: 'AIzaSyDihuJrjMTTKLXXhOEYtpA1_rS3h6xmJKs',
@@ -33,8 +32,6 @@ const getRealtimeDB = (): Database => {
 
 const db = getRealtimeDB();
 const questionsRef = ref(db, 'Qs');
-export type Question = WithId<IQuestionBody>;
-
 type QuestionTypeKey = keyof typeof QuestionType;
 export type TypedQuestion = { [k in QuestionTypeKey]?: Question[] };
 
